@@ -1,33 +1,31 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## The function is used to store data in the cache and be able to use it in the future
 
 makeCacheMatrix <- function(x = matrix()) {
-  j <- NULL
-  set <- function(y){
+#It takes the matrix as input data and returns a list of the methods used at the time of the cache inversion
+  j <- NULL   # is the created temporary array
+  set <- function(y){  # the matrix that was entered is stored
     x <<- y
     j <<- NULL
   }
-  get <- function()x
-  setInverse <- function(inverse) j <<- inverse
-  getInverse <- function() j 
+  get <- function()x #create the stored array
+  setInverse <- function(inverse) j <<- inverse #stores the inverted matrix
+  getInverse <- function() j #create the inverted matrix again
   list(set = set, get = get, 
        setInverse = setInverse, 
        getInverse = getInverse)
 }
 
-## Write a short comment describing this function
+## This function verifies that if the inverted matrix already exists in the beginning, if it is the case, it returns. Otherwise it is calculated and stored
 
 cacheSolve <- function(x, ...) {
   ## Return a matrix that is the inverse of 'x'
-  j <- x$getInverse()
-  if(!is.null(j)){
-    message("getting cached data")
-    return(j)
+  j <- x$getInverse() # obtaining the inverse matrix
+  if(!is.null(j)){  #cache in array
+    message("getting cached data") 
+    return(j) #Returns the cache array and terminates the function
   }
-  mat <- x$get()
-  j <- solve(mat,...)
-  x$setInverse(j)
-  j
+  mat <- x$get() # the matrix is obtained
+  j <- solve(mat,...) # the matrix inversion is calculated
+  x$setInverse(j) # the investment is stored
+  j #done
 }
